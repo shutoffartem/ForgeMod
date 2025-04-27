@@ -1,6 +1,9 @@
 package net.arshut.spacemod;
 
 import com.mojang.logging.LogUtils;
+import net.arshut.spacemod.blocks.ModBlocks;
+import net.arshut.spacemod.items.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -27,9 +30,11 @@ public class SpaceMod
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        ModItems.Register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-
 
 
         // Register ourselves for server and other game events we are interested in
@@ -50,7 +55,16 @@ public class SpaceMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS)
+        {
+            event.accept(ModItems.ICE_AXE);
+            event.accept(ModItems.HE3_BUCKET);
+        }
 
+        if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS)
+        {
+            event.accept(ModBlocks.LUNAR_REGOLITH);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
