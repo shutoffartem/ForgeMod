@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 @Mod(SpaceMod.MOD_ID)
 public class SpaceMod
 {
+
+
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "spacemod";
     // Directly reference a slf4j logger
@@ -28,6 +30,7 @@ public class SpaceMod
 
     public SpaceMod(FMLJavaModLoadingContext context)
     {
+
         IEventBus modEventBus = context.getModEventBus();
 
         ModItems.Register(modEventBus);
@@ -45,6 +48,8 @@ public class SpaceMod
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        MinecraftForge.EVENT_BUS.register(LootTableEvents.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
